@@ -35,6 +35,12 @@ const UserLocation = styled.h3`
     color: #d1d1d1;
 `;
 
+const UserGeneral = styled.p`
+    font-size: 1.6rem;
+    margin: 0.8rem 0;
+    color: white;
+`;
+
 const UserCard = props => {
     return (
         <UserCardContainer>
@@ -42,6 +48,9 @@ const UserCard = props => {
             <UserInfo>
                 <UserName>{props.username}</UserName>
                 <UserLocation>{props.location}</UserLocation>
+                <UserGeneral>Followers: {props.followers}</UserGeneral>
+                <UserGeneral>Following: {props.following}</UserGeneral>
+                <UserGeneral>Public Repos: {props.repos}</UserGeneral>
             </UserInfo>
         </UserCardContainer>
     )

@@ -56,16 +56,20 @@ export default class UserCards extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{margin: '2.5rem 0'}}>
         <input name="ghHandle" type="text" onChange={this.handleChanges} />
         <button onClick={this.handleSubmit}>Submit</button>
         <UserCardsContainer>
           {this.state.users.map(user => {
             return (
               <UserCard
+                key={user.id}
                 image={user.avatar_url}
                 username={user.login}
                 location={user.location}
+                followers={user.followers}
+                following={user.following}
+                repos={user.public_repos}
               />
             );
           })}

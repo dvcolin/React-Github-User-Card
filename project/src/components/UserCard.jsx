@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { TweenMax } from 'gsap'
 
 const UserCardContainer = styled.div`
     display: flex;
@@ -42,8 +43,20 @@ const UserGeneral = styled.p`
 `;
 
 const UserCard = props => {
+
+    const cardHover = e => {
+        e.stopPropagation();
+        const card = e.target;
+        TweenMax.to(card, 0.2, {x:2, y:-2, scale: 1.02, borderColor: 'white'})
+    }
+    const cardReturn = e => {
+        e.stopPropagation();
+        const card = e.target;
+        TweenMax.to(card, 0.2, {x:0, y:0, scale: 1, borderColor:'#d1d1d1'})
+    }
+
     return (
-        <UserCardContainer>
+        <UserCardContainer onMouseEnter={cardHover} onMouseLeave={cardReturn}>
             <UserImage src={props.image} />
             <UserInfo>
                 <UserName>{props.username}</UserName>

@@ -25,13 +25,27 @@ export default class UserCards extends Component {
 
       .then(res => {
         const userData = res.data;
-        console.log("user data", userData);
 
         this.setState({
           users: [...this.state.users, userData]
         });
 
-        console.log(this.state.users);
+        axios
+        .get(`https://api.github.com/users/${this.state.ghHandle}/followers`)
+  
+        .then(res => {
+          const userFollowers = res.data;
+          userFollowers.forEach(user => {
+            this.setState({
+                users: [...this.state.users, user]
+              });
+          })
+          
+        })
+  
+        .catch(err => {
+          console.log(err);
+        });
       })
 
       .catch(err => {
@@ -52,6 +66,7 @@ export default class UserCards extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.getUserInfo();
+    console.log('heres johnny',this.state.users)
   };
 
   render() {

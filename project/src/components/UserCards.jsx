@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 const UserCardsContainer = styled.div`
     width: 80%;
-    margin: 0 auto;
+    margin: 2.5rem auto;
     display: flex;
     flex-direction: column;
 `;
@@ -14,25 +14,24 @@ export default class UserCards extends Component {
     constructor() {
         super();
         this.state = {
-            user: {}
+            ghHandle: 'dvcolin',
+            users: [],
         }
     }
 
-    componentDidMount() {
-        axios.get('https://api.github.com/users/dvcolin')
+    
+    getUserInfo = () => {
+        axios.get(`https://api.github.com/users/${this.state.ghHandle}`)
 
         .then(res => {
             const userData = res.data;
             console.log('user data', userData);
 
             this.setState({
-                user: {
-                    username: userData.login,
-                    location: userData.location,
-                }
+                users: [...this.state.users, userData],
             })
 
-            console.log(this.state.user);
+            console.log(this.state.users);
         })
 
         .catch(err => {
@@ -40,10 +39,30 @@ export default class UserCards extends Component {
         })
     }
 
+    componentDidMount() {
+       this.getUserInfo();
+    }
+
+    handleChanges = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+    handleSubmit = e => {
+        e.preventDefault();
+        this.getUserInfo();
+    }
+
     render() {
         return (
             <UserCardsContainer>
-                <UserCard username={this.state.user.username} />
+                <input name='ghHandle' type='text' onChange={this.handleChanges} />
+                <button onClick={this.handleSubmit}>Submit</button>
+                {this.state.users.map(user => {
+                 return <UserCard username={user.login} location={user.location} />   
+                })}
             </UserCardsContainer>
         )
     }

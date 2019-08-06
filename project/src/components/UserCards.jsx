@@ -36,6 +36,7 @@ export default class UserCards extends Component {
         .then(res => {
           const userFollowers = res.data;
           userFollowers.forEach(user => {
+              console.log(user.followers)
             this.setState({
                 users: [...this.state.users, user]
               });
@@ -66,7 +67,7 @@ export default class UserCards extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.getUserInfo();
-    console.log('heres johnny',this.state.users)
+ 
   };
 
   render() {
@@ -88,6 +89,7 @@ export default class UserCards extends Component {
               />
             );
           })}
+          {console.log('heres johnny',this.state.users)}
         </UserCardsContainer>
       </div>
     );
